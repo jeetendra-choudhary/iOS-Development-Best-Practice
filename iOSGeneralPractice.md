@@ -63,6 +63,48 @@ override func viewDidLoad() {
 }
 ````
 
+### Placeholder for UITextView
+ - UITextView doesn't come with a placeholder property, which is required in many cases. To address that there is a custom solution as per this Stack Overflow Ansewer [Placeholder in UITextView](https://stackoverflow.com/questions/1328638/placeholder-in-uitextview) which I find really helpful.
+
+ - create these two UITextView delegate method in the view controller.
+
+````
+     func textViewDidBeginEditing(_ textView: UITextView) 
+    {
+        if (textView.text == "placeholder text here...")
+        {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        textView.becomeFirstResponder() //Optional
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView)
+    {
+        if (textView.text == "")
+        {
+            textView.text = "placeholder text here..."
+            textView.textColor = .lightGray
+        }
+        textView.resignFirstResponder()
+    }
+````
+
+ - Remember to set UITextView with exact text on creation (may be in viewDidLoad method) e.g
+````
+ let myUITextView = UITextView.init()
+ myUITextView.delegate = self
+ myUITextView.text = "placeholder text here..."
+ myUITextView.textColor = .lightGray
+````
+
+ - Then make the parent class a UITextViewDelegate e.g
+````
+class MyClass: UITextViewDelegate
+{
+
+}
+````
 
 
 
